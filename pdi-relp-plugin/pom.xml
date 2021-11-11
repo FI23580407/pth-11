@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.failsafe.di.steps</groupId>
+	<artifactId>pdi-relp-plugin</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<dependency.kettle.version>8.3.0.0-371</dependency.kettle.version>
+		<autodeploy.to.kettle>true</autodeploy.to.kettle>
+		<kettle.install.directory>C:\Pentaho\design-tools\data-integration</kettle.install.directory>
+	</properties>
+
+	<dependencies>
+
+		<!-- kettle dependencies -->
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-core</artifactId>
+			<version>${dependency.kettle.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-engine</artifactId>
+			<version>${dependency.kettle.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-ui-swt</artifactId>
+			<version>${dependency.kettle.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.teragrep/rlp_01 -->
+		<dependency>
+			<groupId>com.teragrep</groupId>
+			<artifactId>rlp_01</artifactId>
+			<version>1.0.8</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- for syslog rfc5424 formatting -->
+		<dependency>
+			<groupId>com.cloudbees</groupId>
+			<artifactId>syslog-java-client</artifactId>
+			<version>1.1.7</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<target if="${autodeploy.to.kettle}"
+								name="kill-clean-deploy-run-spoon">
+								<exec executable="taskkill.exe">
+									<arg value="/FI" />
+									<arg value="WINDOWTITLE eq Spoon*" />
+									<arg value="/T" />
+									<arg value="/F" />
+								</exec>
+								<sleep seconds="1" />
+								<echo message="${project.artifactId}" />
+								<delete
+									dir="${kettle.install.directory}\plugins\${project.artifactId}" />
+								<unzip dest="${kettle.install.directory}\plugins"
+									src="${project.build.directory}\${project.build.finalName}.zip" />
+								<exec
+									executable="${kettle.install.directory}\SpoonConsole.bat"
+									spawn="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+		</plugins>
+
+	</build>
+
+
+	<repositories>
+		<repository>
+			<id>pentaho.resolve.repo</id>
+			<name>Pentaho Group Resolve Repository</name>
+			<url>http://nexus.pentaho.org/content/groups/omni/</url>
+			<releases>
+				<updatePolicy>always</updatePolicy>
+				<!--checksumPolicy>fail</checksumPolicy -->
+			</releases>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+				<!--checksumPolicy>fail</checksumPolicy -->
+			</snapshots>
+		</repository>
+	</repositories>
+
+</project>

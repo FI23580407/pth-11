@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 42 42" enable-background="new 0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="path-0" d="M 4.806 16.729 C 5.805 19.33 5.678 21.259 6.478 22.972 C 6.875 23.823 7.559 24.367 8.201 25.009 C 11.186 26.375 13.755 26.229 16.09 26.916 C 18.064 27.212 19.693 27.604 21.052 28.431 L 21.131 28.509 L 21.183 28.588" style="fill: none;"/>
+    <path id="path-1" d="M 10.343283810793654 5.707089937672316 L 7.94518520630246 19.450025423450693" style="fill: none;"/>
+    <path id="path-2" d="M 20.634 10.853 C 22.246 14.668 23.619 16.105 25.701 17.33 L 26.041 17.435 C 26.7 17.435 26.952 17.559 26.642 16.938" style="fill: none;"/>
+  </defs>
+  <polygon fill="#3D6480" points="5.502 11.6 12 11.6 12 5.104 10.071 5.104 10.071 8.3 4.689 2.939 3.369 4.279 8.649 9.641 5.502 9.641" style=""/>
+  <rect x="24.9" y="27.4" fill="#FFEBCD" width="0" height="0"/>
+  <rect x="0.94" y="12.211" width="40.459" height="27.19" style="fill: rgb(216, 216, 216);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 1.8px; white-space: pre;" transform="matrix(14.71577, 0, 0, 7.086139, -44.576248, -107.206795)"><tspan x="3.265" y="18.532">RE</tspan><tspan x="3.265" dy="1em">​</tspan><tspan>LP</tspan></text>
+</svg>
